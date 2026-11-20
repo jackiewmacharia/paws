@@ -2,3 +2,6 @@
 !.claude/
 **/.claude/*
 !**/.claude/settings.json
+
+# Personal working notes / session context
+/notes.md
