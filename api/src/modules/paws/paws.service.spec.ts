@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ExternalApiError, NotFoundError } from '../../common/errors/http-error';
 import type { CatService } from '../cats/cat.service';
 import type { CatBreed } from '../cats/cat.types';
@@ -26,16 +27,16 @@ const dog = (overrides: Partial<DogBreed> = {}): DogBreed => ({
 /** Single-breed lists make the "random" pick deterministic. */
 function setup(catBreeds: CatBreed[], dogBreeds: DogBreed[]) {
   const catService = {
-    getBreeds: jest.fn().mockResolvedValue(catBreeds),
-    getBreed: jest.fn().mockResolvedValue(catBreeds[0]),
-    getRandomImage: jest.fn().mockResolvedValue({ id: 'c-img', url: 'https://cdn2.thecatapi.com/c.jpg' }),
-    getCatOfTheDay: jest.fn().mockResolvedValue({ breed: catBreeds[0], funFact: 'cat fact' }),
+    getBreeds: vi.fn().mockResolvedValue(catBreeds),
+    getBreed: vi.fn().mockResolvedValue(catBreeds[0]),
+    getRandomImage: vi.fn().mockResolvedValue({ id: 'c-img', url: 'https://cdn2.thecatapi.com/c.jpg' }),
+    getCatOfTheDay: vi.fn().mockResolvedValue({ breed: catBreeds[0], funFact: 'cat fact' }),
   };
   const dogService = {
-    getBreeds: jest.fn().mockResolvedValue(dogBreeds),
-    getBreed: jest.fn().mockResolvedValue(dogBreeds[0]),
-    getRandomImage: jest.fn().mockResolvedValue({ id: 'd-img', url: 'https://cdn2.thedogapi.com/d.jpg' }),
-    getDogOfTheDay: jest.fn().mockResolvedValue({ breed: dogBreeds[0], funFact: 'dog fact' }),
+    getBreeds: vi.fn().mockResolvedValue(dogBreeds),
+    getBreed: vi.fn().mockResolvedValue(dogBreeds[0]),
+    getRandomImage: vi.fn().mockResolvedValue({ id: 'd-img', url: 'https://cdn2.thedogapi.com/d.jpg' }),
+    getDogOfTheDay: vi.fn().mockResolvedValue({ breed: dogBreeds[0], funFact: 'dog fact' }),
   };
   const service = new PawsService(catService as unknown as CatService, dogService as unknown as DogService);
   return { service, catService, dogService };
@@ -87,7 +88,7 @@ describe('PawsService', () => {
     });
 
     it('logs image failures other than "not found"', async () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
       const { service, catService } = setup([cat()], [dog()]);
       catService.getRandomImage.mockRejectedValue(new ExternalApiError('TheCatAPI', 'rate limited', 429));
 
@@ -139,13 +140,13 @@ describe('PawsService', () => {
   });
 
   describe('getPawOfTheDay', () => {
-    afterEach(() => jest.useRealTimers());
+    afterEach(() => vi.useRealTimers());
 
     it('alternates between a cat and a dog on consecutive days', async () => {
       const { service } = setup([cat()], [dog()]);
       const species: string[] = [];
       for (const day of ['2026-11-20T12:00:00Z', '2026-11-21T12:00:00Z', '2026-11-22T12:00:00Z']) {
-        jest.useFakeTimers({ now: new Date(day) });
+        vi.useFakeTimers({ now: new Date(day) });
         species.push((await service.getPawOfTheDay()).species);
       }
       expect(species[0]).not.toBe(species[1]);

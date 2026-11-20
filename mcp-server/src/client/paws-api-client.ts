@@ -92,7 +92,7 @@ export class PawsApiClient {
       if (err instanceof Error && err.name === 'AbortError') {
         throw new PawsApiError(504, `paws-api timed out for ${path}`);
       }
-      // Checked by name, not `instanceof`: fetch's errors can come from another realm (e.g. under Jest).
+      // Checked by name, not `instanceof`: fetch's errors can come from another realm (e.g. under a test runner).
       if ((err as Error | undefined)?.name === 'SyntaxError') {
         throw new PawsApiError(
           502,

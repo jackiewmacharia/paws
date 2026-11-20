@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { dailyIndex, dailyPick, randomPick } from './daily-pick';
 
 describe('dailyIndex', () => {

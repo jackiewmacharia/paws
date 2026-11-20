@@ -1,3 +1,4 @@
+import { type MockInstance, vi } from 'vitest';
 import type { CatBreed } from '../../src/modules/cats/cat.types';
 import type { DogBreed } from '../../src/modules/dogs/dog.types';
 
@@ -44,8 +45,8 @@ export const dogBreeds: DogBreed[] = [
 ];
 
 /** Mirrors the real unknown-breed-id responses: cat 400 plain text, dog 404 JSON. */
-export function installFetchMock(): jest.SpyInstance {
-  return jest
+export function installFetchMock(): MockInstance<typeof fetch> {
+  return vi
     .spyOn(global, 'fetch')
     .mockImplementation(async (input: RequestInfo | URL) => {
       const url = new URL(typeof input === 'string' ? input : input.toString());

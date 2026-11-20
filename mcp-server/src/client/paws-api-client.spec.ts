@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 import { PawsApiClient, PawsApiError } from './paws-api-client.js';
 
 function jsonResponse(body: unknown, status = 200): Response {
@@ -5,11 +6,11 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 describe('PawsApiClient', () => {
-  let fetchMock: jest.SpyInstance;
+  let fetchMock: MockInstance<typeof fetch>;
   let client: PawsApiClient;
 
   beforeEach(() => {
-    fetchMock = jest.spyOn(global, 'fetch');
+    fetchMock = vi.spyOn(global, 'fetch');
     client = new PawsApiClient({ baseUrl: 'http://localhost:3000', timeoutMs: 1000 });
   });
 

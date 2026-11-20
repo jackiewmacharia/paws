@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest';
 import { TtlCache } from '../cache/ttl-cache';
 import type { HttpClient } from '../http/http-client';
 import { BreedRepository } from './breed-repository';
@@ -5,7 +6,7 @@ import { BreedRepository } from './breed-repository';
 type Breed = { id: string | number; name: string };
 
 function setup() {
-  const http = { get: jest.fn() };
+  const http = { get: vi.fn() };
   const repository = new BreedRepository<Breed, unknown>(
     http as unknown as HttpClient,
     new TtlCache<Breed[]>(60_000),

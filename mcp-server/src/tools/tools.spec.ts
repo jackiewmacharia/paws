@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it, type Mocked, vi } from 'vitest';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -28,13 +29,13 @@ const WIRING: [tool: string, args: Record<string, string>, method: keyof PawsApi
 
 describe('MCP tools', () => {
   let client: Client;
-  let pawsApi: jest.Mocked<PawsApiClient>;
+  let pawsApi: Mocked<PawsApiClient>;
 
   beforeEach(async () => {
     const methods = Object.getOwnPropertyNames(PawsApiClient.prototype).filter((name) => name !== 'constructor');
     pawsApi = Object.fromEntries(
-      methods.map((name) => [name, jest.fn().mockResolvedValue({ from: name })]),
-    ) as unknown as jest.Mocked<PawsApiClient>;
+      methods.map((name) => [name, vi.fn().mockResolvedValue({ from: name })]),
+    ) as unknown as Mocked<PawsApiClient>;
 
     const server = new McpServer({ name: 'paws-mcp', version: 'test' });
     registerCatTools(server, pawsApi);

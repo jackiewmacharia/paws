@@ -1,3 +1,4 @@
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 import type { Express } from 'express';
 import request from 'supertest';
 import { createApp } from '../src/app';
@@ -9,7 +10,7 @@ import {
 
 describe('App (e2e)', () => {
   let app: Express;
-  let fetchMock: jest.SpyInstance;
+  let fetchMock: MockInstance<typeof fetch>;
 
   beforeAll(() => {
     fetchMock = installFetchMock();
@@ -194,13 +195,13 @@ describe('App (e2e)', () => {
 
   describe('upstream failures', () => {
     let fakeUpstream: (input: RequestInfo | URL) => Promise<Response>;
-    let warnSpy: jest.SpyInstance;
-    let errorSpy: jest.SpyInstance;
+    let warnSpy: MockInstance<typeof console.warn>;
+    let errorSpy: MockInstance<typeof console.error>;
 
     beforeEach(() => {
       fakeUpstream = fetchMock.getMockImplementation()!;
-      warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-      errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {

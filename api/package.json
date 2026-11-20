@@ -14,11 +14,12 @@
     "start:prod": "node dist/main",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test": "vitest run --project unit",
+    "test:watch": "vitest --project unit",
+    "test:cov": "vitest run --project unit --coverage",
+    "test:debug": "vitest run --project unit --inspect-brk --no-file-parallelism",
+    "test:e2e": "vitest run --project e2e",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "express": "^5.1.0",
@@ -26,34 +27,14 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.0",
     "@types/supertest": "^7.0.0",
-    "jest": "^30.0.0",
+    "@vitest/coverage-v8": "^5.1.1",
     "oxlint": "^1.77.0",
     "prettier": "^3.4.2",
     "supertest": "^7.0.0",
-    "ts-jest": "^29.2.5",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "typescript": "^5.7.3",
+    "vitest": "^5.1.1"
   }
 }
