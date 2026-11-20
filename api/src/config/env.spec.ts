@@ -1,12 +1,13 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { loadConfig } from './env';
 
 describe('loadConfig', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('applies defaults when nothing is set', () => {

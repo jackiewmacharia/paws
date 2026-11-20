@@ -57,6 +57,7 @@ server yourself from a shell with `source .env`.
 - `pnpm start` / `pnpm dev` — run with tsx (`dev` reloads on change); for manual testing — MCP
   clients should launch `dist/index.js`
 - `pnpm lint` / `pnpm lint:fix`
+- `pnpm typecheck` — type-check everything, specs included (Vitest itself skips type checking)
 - `pnpm test` — unit tests for the HTTP client, config, and tool wiring (an in-memory MCP client
   calls every tool against a fake API client; no real network or running API needed). `test:watch`
   for watch mode.

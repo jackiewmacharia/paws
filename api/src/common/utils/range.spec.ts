@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { average, parseRange } from './range';
 
 describe('parseRange', () => {

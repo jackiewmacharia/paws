@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 import { ExternalApiError } from '../errors/http-error';
 import { HttpClient } from './http-client';
 
@@ -9,15 +10,15 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 describe('HttpClient', () => {
-  let fetchMock: jest.SpyInstance;
+  let fetchMock: MockInstance<typeof fetch>;
 
   beforeEach(() => {
-    fetchMock = jest.spyOn(global, 'fetch');
+    fetchMock = vi.spyOn(global, 'fetch');
   });
 
   afterEach(() => {
     fetchMock.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   const client = (options: Partial<ConstructorParameters<typeof HttpClient>[0]> = {}) =>
@@ -90,7 +91,7 @@ describe('HttpClient', () => {
     });
 
     it('aborts the request after timeoutMs and reports a 504', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       fetchMock.mockImplementation(
         (_url: string, init: RequestInit) =>
           new Promise((_resolve, reject) => {
@@ -103,7 +104,7 @@ describe('HttpClient', () => {
       );
 
       const pending = client({ timeoutMs: 1000 }).get('/breeds');
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
       await expect(pending).rejects.toMatchObject({ status: 504, message: 'TheCatAPI timed out for /breeds' });
     });
   });

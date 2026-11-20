@@ -15,35 +15,20 @@
     "start:prod": "node dist/index.js",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.0",
-    "jest": "^30.0.0",
     "oxlint": "^1.77.0",
     "prettier": "^3.4.2",
-    "ts-jest": "^29.2.5",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
-  },
-  "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
-    },
-    "collectCoverageFrom": ["**/*.(t|j)s"],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "typescript": "^5.7.3",
+    "vitest": "^5.1.1"
   }
 }

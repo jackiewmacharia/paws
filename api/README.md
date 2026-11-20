@@ -34,6 +34,7 @@ variable) if one is invalid. Empty values count as unset.
 - `pnpm start` — run once with tsx (no reload)
 - `pnpm build` / `pnpm start:prod` — compile to `dist/` and run it with node
 - `pnpm lint` / `pnpm lint:fix`, `pnpm format`
+- `pnpm typecheck` — type-check everything, specs included (Vitest itself skips type checking)
 - `pnpm test` — unit tests: utils, TTL cache, config, `HttpClient`, `BreedRepository`, `PawsService`
   (`test:watch` / `test:cov` for watch mode and coverage)
 - `pnpm test:e2e` — full HTTP surface, with `global.fetch` mocked (see `test/support/fake-upstream.ts`)

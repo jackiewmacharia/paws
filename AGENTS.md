@@ -25,22 +25,27 @@ commands from inside the package's folder.
 
 ## Verifying a change
 
-There's no CI. Before committing, run these in every package you touched. A change is done when all
-of them pass:
+Before committing, run these in every package you touched. A change is done when all of them pass.
+CI (`.github/workflows/ci.yml`) runs the same commands on every PR, one job per package, so keep the
+two lists in sync:
 
-- `api/`: `pnpm lint && pnpm test && pnpm test:e2e && pnpm build`
-- `mcp-server/`: `pnpm lint && pnpm test && pnpm build`
+- `api/`: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build`
+- `mcp-server/`: `pnpm lint && pnpm typecheck && pnpm test && pnpm build`
 - `web/`: `npm run lint && npm run build` (no tests yet)
 
 The test suites never call the real upstreams and don't need API keys or a running api.
 
 ## Tests
 
-- Jest with ts-jest. Unit tests live next to their source as `*.spec.ts`.
+- Vitest. Each spec imports what it uses (`describe`, `it`, `expect`, `vi`) from `'vitest'`; there
+  are no globals. Unit tests live next to their source as `*.spec.ts`.
+- Vitest only strips types and doesn't check them, so `pnpm typecheck` is what catches type errors
+  in specs (`pnpm build` excludes them).
 - Unit tests wire the class under test by hand, through a local `setup()` helper, and pass
-  `jest.fn()` fakes for its collaborators (e.g. `{ get: jest.fn() }` as the `HttpClient`). There's no
+  `vi.fn()` fakes for its collaborators (e.g. `{ get: vi.fn() }` as the `HttpClient`). There's no
   DI container to mock.
-- api e2e tests live in `api/test/*.e2e-spec.ts`. They use supertest against `createApp()`, with
+- api e2e tests live in `api/test/*.e2e-spec.ts`, as a separate Vitest project (see
+  `api/vitest.config.mts`). They use supertest against `createApp()`, with
   `global.fetch` replaced by `installFetchMock()` from `api/test/support/fake-upstream.ts`. If you
   add a call to a new upstream path, add a matching case to the fake.
 - mcp-server: `src/tools/tools.spec.ts` calls every tool through an in-memory MCP client. Its
