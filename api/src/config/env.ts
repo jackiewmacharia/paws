@@ -15,7 +15,7 @@ export interface AppConfig {
 const unsetIfEmpty = (value: unknown) =>
   typeof value === 'string' && value.trim() === '' ? undefined : value;
 
-const optional = <T extends z.ZodTypeAny>(schema: T) => z.preprocess(unsetIfEmpty, schema);
+const optional = <T extends z.ZodType>(schema: T) => z.preprocess(unsetIfEmpty, schema);
 
 /** `z.string().url()` alone accepts `localhost:9000` (scheme "localhost:"), so require http(s). */
 const httpUrl = z.string().regex(/^https?:\/\/[^/]/, 'must be an http(s) URL');

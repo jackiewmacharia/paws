@@ -12,7 +12,7 @@ export interface McpConfig {
 }
 
 /** An empty value (e.g. `PAWS_API_URL=` in an MCP client's env block) means "unset". */
-const optional = <T extends z.ZodTypeAny>(schema: T) =>
+const optional = <T extends z.ZodType>(schema: T) =>
   z.preprocess((value) => (typeof value === 'string' && value.trim() === '' ? undefined : value), schema);
 
 /** `z.string().url()` alone accepts `localhost:3000` (scheme "localhost:"), so require http(s). */
