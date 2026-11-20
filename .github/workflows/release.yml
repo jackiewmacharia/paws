@@ -17,11 +17,20 @@ jobs:
     if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') }}
     runs-on: ubuntu-latest
     steps:
+      # main's ruleset requires PRs; this deploy key is on its bypass list so the release commit can land
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: commitizen-tools/commitizen-action@0.27.1
+          ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
+      - id: cz
+        uses: commitizen-tools/commitizen-action@0.27.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          push: false
           # 21 = no feat/fix/breaking commits since the last tag, so there's nothing to release
           no_raise: "21"
+      - name: push release commit and tag
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$GITHUB_SHA" ]; then
+            git push --atomic origin HEAD:main "v${{ steps.cz.outputs.version }}"
+          fi
