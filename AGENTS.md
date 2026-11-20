@@ -4,14 +4,14 @@ paws puts TheCatAPI and TheDogAPI behind one Express api, with an MCP server and
 Each package's README covers setup, scripts, routes and architecture. Read the README for the
 package you're changing before you start.
 
-| Folder | What it is | Package manager |
-| --- | --- | --- |
-| `api/` | Express 5 + TypeScript service that aggregates the two upstream APIs | pnpm |
-| `mcp-server/` | stdio MCP server. Each tool calls one api endpoint; it has no pet logic of its own | pnpm |
-| `web/` | Vite + React scaffold, not wired to the api yet | npm (`package-lock.json`) |
+| Folder | What it is |
+| --- | --- |
+| `api/` | Express 5 + TypeScript service that aggregates the two upstream APIs |
+| `mcp-server/` | stdio MCP server. Each tool calls one api endpoint; it has no pet logic of its own |
+| `web/` | Vite + React scaffold, not wired to the api yet |
 
-There's no root `package.json` or workspace. Each package installs and runs on its own, so run
-commands from inside the package's folder.
+All three use pnpm. There's no root `package.json` or workspace. Each package has its own lockfile
+and installs and runs on its own, so run commands from inside the package's folder.
 
 ## Workflow
 
@@ -31,7 +31,7 @@ two lists in sync:
 
 - `api/`: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build`
 - `mcp-server/`: `pnpm lint && pnpm typecheck && pnpm test && pnpm build`
-- `web/`: `npm run lint && npm run build` (no tests yet)
+- `web/`: `pnpm lint && pnpm build` (no tests yet)
 
 The test suites never call the real upstreams and don't need API keys or a running api.
 
