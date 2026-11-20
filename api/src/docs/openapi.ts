@@ -13,7 +13,7 @@ export const OPENAPI_DOCUMENT = {
     { name: 'health', description: 'Service health' },
     { name: 'cats', description: 'TheCatAPI, proxied and normalized' },
     { name: 'dogs', description: 'TheDogAPI, proxied and normalized' },
-    { name: 'pets', description: 'Fun aggregates across both species' },
+    { name: 'paws', description: 'Fun aggregates across both species' },
   ],
   paths: {
     '/health': {
@@ -105,16 +105,16 @@ export const OPENAPI_DOCUMENT = {
         responses: { '200': ref('DogSpotlight') },
       },
     },
-    '/pets/random-duo': {
+    '/paws/random-duo': {
       get: {
-        tags: ['pets'],
+        tags: ['paws'],
         summary: 'One random cat image and one random dog image, side by side',
         responses: { '200': ref('RandomDuo') },
       },
     },
-    '/pets/compare': {
+    '/paws/compare': {
       get: {
-        tags: ['pets'],
+        tags: ['paws'],
         summary: 'Compare a cat breed and a dog breed head-to-head',
         parameters: [
           queryParam('catBreedId', 'Cat breed id, e.g. "beng"', true),
@@ -127,26 +127,26 @@ export const OPENAPI_DOCUMENT = {
         },
       },
     },
-    '/pets/showdown': {
+    '/paws/showdown': {
       get: {
-        tags: ['pets'],
+        tags: ['paws'],
         summary:
           'A random cat breed vs. a random dog breed, scored across 3 fun rounds',
         responses: { '200': ref('ShowdownResult') },
       },
     },
-    '/pets/stats': {
+    '/paws/stats': {
       get: {
-        tags: ['pets'],
+        tags: ['paws'],
         summary: 'Aggregate stats across every catalogued cat and dog breed',
-        responses: { '200': ref('PetStats') },
+        responses: { '200': ref('PawStats') },
       },
     },
-    '/pets/of-the-day': {
+    '/paws/of-the-day': {
       get: {
-        tags: ['pets'],
-        summary: 'Pet of the day — alternates species by date',
-        responses: { '200': ref('PetOfTheDay') },
+        tags: ['paws'],
+        summary: 'Paw of the day — alternates species by date',
+        responses: { '200': ref('PawOfTheDay') },
       },
     },
   },
@@ -281,7 +281,7 @@ export const OPENAPI_DOCUMENT = {
           fetchedAt: { type: 'string', format: 'date-time' },
         },
       },
-      PetVitals: {
+      PawVitals: {
         type: 'object',
         properties: {
           species: { type: 'string', enum: ['cat', 'dog'] },
@@ -299,8 +299,8 @@ export const OPENAPI_DOCUMENT = {
       BreedComparison: {
         type: 'object',
         properties: {
-          cat: { $ref: '#/components/schemas/PetVitals' },
-          dog: { $ref: '#/components/schemas/PetVitals' },
+          cat: { $ref: '#/components/schemas/PawVitals' },
+          dog: { $ref: '#/components/schemas/PawVitals' },
           longerLivedSpecies: { type: 'string', enum: ['cat', 'dog', 'tie'] },
           heavierSpecies: { type: 'string', enum: ['cat', 'dog', 'tie'] },
           sharedTemperamentTraits: { type: 'array', items: { type: 'string' } },
@@ -324,7 +324,7 @@ export const OPENAPI_DOCUMENT = {
         properties: {
           cat: {
             allOf: [
-              { $ref: '#/components/schemas/PetVitals' },
+              { $ref: '#/components/schemas/PawVitals' },
               {
                 type: 'object',
                 properties: { image: { $ref: '#/components/schemas/CatImage' } },
@@ -334,7 +334,7 @@ export const OPENAPI_DOCUMENT = {
           },
           dog: {
             allOf: [
-              { $ref: '#/components/schemas/PetVitals' },
+              { $ref: '#/components/schemas/PawVitals' },
               {
                 type: 'object',
                 properties: { image: { $ref: '#/components/schemas/DogImage' } },
@@ -371,7 +371,7 @@ export const OPENAPI_DOCUMENT = {
           },
         },
       },
-      PetStats: {
+      PawStats: {
         type: 'object',
         properties: {
           cats: { $ref: '#/components/schemas/SpeciesStats' },
@@ -379,7 +379,7 @@ export const OPENAPI_DOCUMENT = {
           generatedAt: { type: 'string', format: 'date-time' },
         },
       },
-      PetOfTheDay: {
+      PawOfTheDay: {
         type: 'object',
         properties: {
           species: { type: 'string', enum: ['cat', 'dog'] },

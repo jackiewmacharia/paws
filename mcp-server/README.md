@@ -71,7 +71,7 @@ src/
     tool-result.ts              # shared success/error -> CallToolResult mapping
     cat-tools.ts                # list_cat_breeds, get_cat_breed, get_cat_spotlight, ...
     dog-tools.ts                # mirrors cat-tools.ts
-    pets-tools.ts               # the cross-species aggregate tools
+    paws-tools.ts               # the cross-species aggregate tools
   resources.ts                  # exposes paws-api's /openapi.json as an MCP resource
   server.ts                     # composition root: wires client -> tools/resources onto McpServer
   index.ts                      # stdio transport entrypoint
@@ -93,11 +93,11 @@ into an MCP `isError: true` tool result whose text includes the paws-api status 
 | `get_cat_spotlight` / `get_dog_spotlight` | `GET /{cats,dogs}/breeds/:id/spotlight` |
 | `get_random_cat_image` / `get_random_dog_image` | `GET /{cats,dogs}/random?breedId=` |
 | `get_cat_of_the_day` / `get_dog_of_the_day` | `GET /{cats,dogs}/of-the-day` |
-| `get_random_pet_duo` | `GET /pets/random-duo` |
-| `compare_pet_breeds` | `GET /pets/compare?catBreedId=&dogBreedId=` |
-| `get_pet_showdown` | `GET /pets/showdown` |
-| `get_pet_stats` | `GET /pets/stats` |
-| `get_pet_of_the_day` | `GET /pets/of-the-day` |
+| `get_random_paw_duo` | `GET /paws/random-duo` |
+| `compare_paw_breeds` | `GET /paws/compare?catBreedId=&dogBreedId=` |
+| `get_paw_showdown` | `GET /paws/showdown` |
+| `get_paw_stats` | `GET /paws/stats` |
+| `get_paw_of_the_day` | `GET /paws/of-the-day` |
 
 ### Resources
 - `paws-api://openapi.json` — paws-api's OpenAPI document, fetched live on read.

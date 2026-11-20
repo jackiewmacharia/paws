@@ -51,19 +51,19 @@ export class PawsApiClient {
   }
 
   getRandomDuo(): Promise<unknown> {
-    return this.get('/pets/random-duo');
+    return this.get('/paws/random-duo');
   }
   compareBreeds(catBreedId: string, dogBreedId: string): Promise<unknown> {
-    return this.get('/pets/compare', { catBreedId, dogBreedId });
+    return this.get('/paws/compare', { catBreedId, dogBreedId });
   }
   getShowdown(): Promise<unknown> {
-    return this.get('/pets/showdown');
+    return this.get('/paws/showdown');
   }
   getStats(): Promise<unknown> {
-    return this.get('/pets/stats');
+    return this.get('/paws/stats');
   }
-  getPetOfTheDay(): Promise<unknown> {
-    return this.get('/pets/of-the-day');
+  getPawOfTheDay(): Promise<unknown> {
+    return this.get('/paws/of-the-day');
   }
 
   getOpenApiSchema(): Promise<unknown> {

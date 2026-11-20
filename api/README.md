@@ -3,7 +3,7 @@
 Aggregates [TheCatAPI](https://docs.thecatapi.com/reference) and
 [TheDogAPI](https://docs.thedogapi.com/reference) into one API: per-species endpoints for cats and
 dogs, plus "fun aggregate" endpoints that combine both (breed comparisons, a stat showdown,
-cross-species stats, pet-of-the-day). Plain Express + TypeScript (no NestJS or DI container) with
+cross-species stats, paw-of-the-day). Plain Express + TypeScript (no NestJS or DI container) with
 the layers you'd expect from a small backend service: repositories, services, routes, a
 composition root, and error-handling middleware.
 
@@ -34,7 +34,7 @@ variable) if one is invalid. Empty values count as unset.
 - `pnpm start` — run once with tsx (no reload)
 - `pnpm build` / `pnpm start:prod` — compile to `dist/` and run it with node
 - `pnpm lint` / `pnpm lint:fix`, `pnpm format`
-- `pnpm test` — unit tests: utils, TTL cache, config, `HttpClient`, `BreedRepository`, `PetsService`
+- `pnpm test` — unit tests: utils, TTL cache, config, `HttpClient`, `BreedRepository`, `PawsService`
   (`test:watch` / `test:cov` for watch mode and coverage)
 - `pnpm test:e2e` — full HTTP surface, with `global.fetch` mocked (see `test/support/fake-upstream.ts`)
   so it never depends on the real upstream APIs or a live API key
@@ -55,7 +55,7 @@ src/
   modules/
     cats/            # CatService (TheCatAPI) + thin repository/router bindings
     dogs/            # DogService (TheDogAPI) + thin repository/router bindings
-    pets/            # PetsService composes CatService + DogService for cross-species endpoints
+    paws/            # PawsService composes CatService + DogService for cross-species endpoints
     health/
   docs/              # OpenAPI document + Swagger UI page
   app.ts             # builds and configures the Express app: wires repositories -> services -> routers
@@ -69,7 +69,7 @@ src/
   limit). Base URLs come from `config/env.ts`.
 - **Service layer** — `CatService` / `DogService` hold business logic and translate upstream quirks
   into a consistent surface (e.g. TheCatAPI returns `400 INVALID_DATA` for an unknown breed id,
-  TheDogAPI returns `404`; both become a clean `404 Not Found` here). `PetsService` has no upstream
+  TheDogAPI returns `404`; both become a clean `404 Not Found` here). `PawsService` has no upstream
   knowledge at all — it only composes the two per-species services.
 - **Routes** are thin Express routers; validation is a few `zod` schemas on `req.query`.
   Express 5 forwards rejected promises to the error middleware automatically, so handlers are plain
@@ -91,7 +91,7 @@ src/
 
 **Dogs** (mounted at `/dogs`) — same shape as cats.
 
-**Pets** (mounted at `/pets` — the fun cross-species aggregates)
+**Paws** (mounted at `/paws` — the fun cross-species aggregates)
 - `GET /random-duo` — one random cat photo + one random dog photo
 - `GET /compare` `?catBreedId=&dogBreedId=` — head-to-head: life span, weight, shared temperament traits
 - `GET /showdown` — a random cat breed vs. a random dog breed, scored across 3 rounds

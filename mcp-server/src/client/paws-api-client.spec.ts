@@ -78,7 +78,7 @@ describe('PawsApiClient', () => {
     fetchMock.mockResolvedValue(new Response('<!doctype html><html></html>', { status: 200 }));
     await expect(client.getStats()).rejects.toMatchObject({
       status: 502,
-      message: expect.stringContaining('returned non-JSON for /pets/stats'),
+      message: expect.stringContaining('returned non-JSON for /paws/stats'),
     });
   });
 

@@ -47,7 +47,7 @@ describe('App (e2e)', () => {
     it('/openapi.json (GET) serves a schema describing every route', async () => {
       const res = await request(app).get('/openapi.json').expect(200);
       expect(res.body.openapi).toBe('3.0.3');
-      expect(res.body.paths).toHaveProperty('/pets/showdown');
+      expect(res.body.paths).toHaveProperty('/paws/showdown');
       expect(res.body.components.schemas).toHaveProperty('CatBreed');
     });
 
@@ -132,24 +132,24 @@ describe('App (e2e)', () => {
     });
   });
 
-  describe('pets (aggregates)', () => {
-    it('/pets/random-duo (GET) returns one cat image and one dog image', async () => {
-      const res = await request(app).get('/pets/random-duo').expect(200);
+  describe('paws (aggregates)', () => {
+    it('/paws/random-duo (GET) returns one cat image and one dog image', async () => {
+      const res = await request(app).get('/paws/random-duo').expect(200);
       expect(res.body.cat.url).toContain('thecatapi');
       expect(res.body.dog.url).toContain('thedogapi');
     });
 
-    it('/pets/compare (GET) requires both breed ids', async () => {
+    it('/paws/compare (GET) requires both breed ids', async () => {
       const res = await request(app)
-        .get('/pets/compare')
+        .get('/paws/compare')
         .query({ catBreedId: 'abys' })
         .expect(400);
       expect(res.body.message.join(' ')).toContain('dogBreedId');
     });
 
-    it('/pets/compare (GET) compares life span, weight, and shared temperament', async () => {
+    it('/paws/compare (GET) compares life span, weight, and shared temperament', async () => {
       const res = await request(app)
-        .get('/pets/compare')
+        .get('/paws/compare')
         .query({ catBreedId: 'abys', dogBreedId: '1' })
         .expect(200);
 
@@ -158,16 +158,16 @@ describe('App (e2e)', () => {
       expect(res.body.sharedTemperamentTraits).toEqual([]);
     });
 
-    it('/pets/showdown (GET) runs a 3-round battle with a declared winner', async () => {
-      const res = await request(app).get('/pets/showdown').expect(200);
+    it('/paws/showdown (GET) runs a 3-round battle with a declared winner', async () => {
+      const res = await request(app).get('/paws/showdown').expect(200);
       expect(res.body.rounds).toHaveLength(3);
       expect(['cat', 'dog', 'tie']).toContain(res.body.overallWinner);
       expect(res.body.cat.species).toBe('cat');
       expect(res.body.dog.species).toBe('dog');
     });
 
-    it('/pets/stats (GET) aggregates across every catalogued breed', async () => {
-      const res = await request(app).get('/pets/stats').expect(200);
+    it('/paws/stats (GET) aggregates across every catalogued breed', async () => {
+      const res = await request(app).get('/paws/stats').expect(200);
       expect(res.body.cats).toMatchObject({
         breedCount: 2,
         averageLifeSpanYears: 14,
@@ -184,8 +184,8 @@ describe('App (e2e)', () => {
       });
     });
 
-    it('/pets/of-the-day (GET) alternates species and includes a spotlight', async () => {
-      const res = await request(app).get('/pets/of-the-day').expect(200);
+    it('/paws/of-the-day (GET) alternates species and includes a spotlight', async () => {
+      const res = await request(app).get('/paws/of-the-day').expect(200);
       expect(['cat', 'dog']).toContain(res.body.species);
       expect(res.body.spotlight.breed).toBeDefined();
       expect(typeof res.body.spotlight.funFact).toBe('string');

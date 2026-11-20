@@ -8,17 +8,17 @@ import type { DogService } from '../dogs/dog.service';
 import type { DogBreed } from '../dogs/dog.types';
 import type {
   BreedComparison,
-  PetOfTheDay,
-  PetStats,
-  PetVitals,
+  PawOfTheDay,
+  PawStats,
+  PawVitals,
   RandomDuo,
   ShowdownResult,
   ShowdownRound,
   Species,
   SpeciesStats,
-} from './pets.types';
+} from './paws.types';
 
-export class PetsService {
+export class PawsService {
   constructor(
     private readonly catService: CatService,
     private readonly dogService: DogService,
@@ -100,7 +100,7 @@ export class PetsService {
     };
   }
 
-  async getPetOfTheDay(): Promise<PetOfTheDay> {
+  async getPawOfTheDay(): Promise<PawOfTheDay> {
     const species: Species = dailyIndex(2) === 0 ? 'cat' : 'dog';
     if (species === 'cat') {
       return { species, spotlight: await this.catService.getCatOfTheDay() };
@@ -108,7 +108,7 @@ export class PetsService {
     return { species, spotlight: await this.dogService.getDogOfTheDay() };
   }
 
-  async getStats(): Promise<PetStats> {
+  async getStats(): Promise<PawStats> {
     const [catBreeds, dogBreeds] = await Promise.all([
       this.catService.getBreeds(),
       this.dogService.getBreeds(),
@@ -122,7 +122,7 @@ export class PetsService {
   }
 }
 
-function toVitals(species: Species, breed: CatBreed | DogBreed): PetVitals {
+function toVitals(species: Species, breed: CatBreed | DogBreed): PawVitals {
   return {
     species,
     id: breed.id,

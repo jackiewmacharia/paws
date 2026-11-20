@@ -3,7 +3,7 @@ import type { CatService } from '../cats/cat.service';
 import type { CatBreed } from '../cats/cat.types';
 import type { DogService } from '../dogs/dog.service';
 import type { DogBreed } from '../dogs/dog.types';
-import { PetsService } from './pets.service';
+import { PawsService } from './paws.service';
 
 const cat = (overrides: Partial<CatBreed> = {}): CatBreed => ({
   id: 'abys',
@@ -37,11 +37,11 @@ function setup(catBreeds: CatBreed[], dogBreeds: DogBreed[]) {
     getRandomImage: jest.fn().mockResolvedValue({ id: 'd-img', url: 'https://cdn2.thedogapi.com/d.jpg' }),
     getDogOfTheDay: jest.fn().mockResolvedValue({ breed: dogBreeds[0], funFact: 'dog fact' }),
   };
-  const service = new PetsService(catService as unknown as CatService, dogService as unknown as DogService);
+  const service = new PawsService(catService as unknown as CatService, dogService as unknown as DogService);
   return { service, catService, dogService };
 }
 
-describe('PetsService', () => {
+describe('PawsService', () => {
   describe('getShowdown', () => {
     it('declares the side that takes 2 of 3 rounds the winner, naming the rounds it won', async () => {
       // Cat lives longer (15 vs 13); dog is heavier (4.5 vs 4 kg) and has more traits (3 vs 2).
@@ -138,7 +138,7 @@ describe('PetsService', () => {
     });
   });
 
-  describe('getPetOfTheDay', () => {
+  describe('getPawOfTheDay', () => {
     afterEach(() => jest.useRealTimers());
 
     it('alternates between a cat and a dog on consecutive days', async () => {
@@ -146,7 +146,7 @@ describe('PetsService', () => {
       const species: string[] = [];
       for (const day of ['2026-11-20T12:00:00Z', '2026-11-21T12:00:00Z', '2026-11-22T12:00:00Z']) {
         jest.useFakeTimers({ now: new Date(day) });
-        species.push((await service.getPetOfTheDay()).species);
+        species.push((await service.getPawOfTheDay()).species);
       }
       expect(species[0]).not.toBe(species[1]);
       expect(species[2]).toBe(species[0]);

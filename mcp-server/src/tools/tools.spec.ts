@@ -5,7 +5,7 @@ import { PawsApiClient, PawsApiError } from '../client/paws-api-client.js';
 import { registerResources } from '../resources.js';
 import { registerCatTools } from './cat-tools.js';
 import { registerDogTools } from './dog-tools.js';
-import { registerPetsTools } from './pets-tools.js';
+import { registerPawsTools } from './paws-tools.js';
 
 /** Every tool, the client method it must call, and the arguments it must pass. */
 const WIRING: [tool: string, args: Record<string, string>, method: keyof PawsApiClient, expected: unknown[]][] = [
@@ -19,11 +19,11 @@ const WIRING: [tool: string, args: Record<string, string>, method: keyof PawsApi
   ['get_dog_spotlight', { id: '1' }, 'getDogSpotlight', ['1']],
   ['get_random_dog_image', { breedId: '1' }, 'getRandomDogImage', ['1']],
   ['get_dog_of_the_day', {}, 'getDogOfTheDay', []],
-  ['get_random_pet_duo', {}, 'getRandomDuo', []],
-  ['compare_pet_breeds', { catBreedId: 'beng', dogBreedId: '1' }, 'compareBreeds', ['beng', '1']],
-  ['get_pet_showdown', {}, 'getShowdown', []],
-  ['get_pet_stats', {}, 'getStats', []],
-  ['get_pet_of_the_day', {}, 'getPetOfTheDay', []],
+  ['get_random_paw_duo', {}, 'getRandomDuo', []],
+  ['compare_paw_breeds', { catBreedId: 'beng', dogBreedId: '1' }, 'compareBreeds', ['beng', '1']],
+  ['get_paw_showdown', {}, 'getShowdown', []],
+  ['get_paw_stats', {}, 'getStats', []],
+  ['get_paw_of_the_day', {}, 'getPawOfTheDay', []],
 ];
 
 describe('MCP tools', () => {
@@ -39,7 +39,7 @@ describe('MCP tools', () => {
     const server = new McpServer({ name: 'paws-mcp', version: 'test' });
     registerCatTools(server, pawsApi);
     registerDogTools(server, pawsApi);
-    registerPetsTools(server, pawsApi);
+    registerPawsTools(server, pawsApi);
     registerResources(server, pawsApi);
 
     const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();

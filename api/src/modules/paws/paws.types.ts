@@ -6,7 +6,7 @@ import type { DogImage } from '../dogs/dog.types';
 
 export type Species = 'cat' | 'dog';
 
-export interface PetVitals {
+export interface PawVitals {
   species: Species;
   /** A string for cats, a number for dogs — passed through from each upstream API. */
   id: string | number;
@@ -24,8 +24,8 @@ export interface RandomDuo {
 }
 
 export interface BreedComparison {
-  cat: PetVitals;
-  dog: PetVitals;
+  cat: PawVitals;
+  dog: PawVitals;
   longerLivedSpecies?: Species | 'tie';
   heavierSpecies?: Species | 'tie';
   sharedTemperamentTraits: string[];
@@ -40,8 +40,8 @@ export interface ShowdownRound {
 }
 
 export interface ShowdownResult {
-  cat: PetVitals & { image?: CatImage };
-  dog: PetVitals & { image?: DogImage };
+  cat: PawVitals & { image?: CatImage };
+  dog: PawVitals & { image?: DogImage };
   rounds: ShowdownRound[];
   overallWinner: Species | 'tie';
   summary: string;
@@ -54,13 +54,13 @@ export interface SpeciesStats {
   mostCommonTemperamentTrait?: { trait: string; breedCount: number };
 }
 
-export interface PetStats {
+export interface PawStats {
   cats: SpeciesStats;
   dogs: SpeciesStats;
   generatedAt: string;
 }
 
 /** Alternates between a cat and a dog spotlight, deterministically by date. */
-export type PetOfTheDay =
+export type PawOfTheDay =
   | { species: 'cat'; spotlight: CatSpotlight }
   | { species: 'dog'; spotlight: DogSpotlight };

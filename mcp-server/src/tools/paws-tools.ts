@@ -3,9 +3,9 @@ import { z } from 'zod';
 import type { PawsApiClient } from '../client/paws-api-client.js';
 import { withErrorHandling } from './tool-result.js';
 
-export function registerPetsTools(server: McpServer, client: PawsApiClient): void {
+export function registerPawsTools(server: McpServer, client: PawsApiClient): void {
   server.registerTool(
-    'get_random_pet_duo',
+    'get_random_paw_duo',
     {
       title: 'Get a random cat + dog duo',
       description: 'Get one random cat photo and one random dog photo, side by side.',
@@ -14,7 +14,7 @@ export function registerPetsTools(server: McpServer, client: PawsApiClient): voi
   );
 
   server.registerTool(
-    'compare_pet_breeds',
+    'compare_paw_breeds',
     {
       title: 'Compare a cat breed and a dog breed',
       description:
@@ -28,7 +28,7 @@ export function registerPetsTools(server: McpServer, client: PawsApiClient): voi
   );
 
   server.registerTool(
-    'get_pet_showdown',
+    'get_paw_showdown',
     {
       title: 'Run a cat vs. dog showdown',
       description:
@@ -38,7 +38,7 @@ export function registerPetsTools(server: McpServer, client: PawsApiClient): voi
   );
 
   server.registerTool(
-    'get_pet_stats',
+    'get_paw_stats',
     {
       title: 'Get aggregate pet stats',
       description:
@@ -48,11 +48,11 @@ export function registerPetsTools(server: McpServer, client: PawsApiClient): voi
   );
 
   server.registerTool(
-    'get_pet_of_the_day',
+    'get_paw_of_the_day',
     {
-      title: 'Get the pet of the day',
+      title: 'Get the paw of the day',
       description: 'Get today\'s featured pet — alternates between a cat spotlight and a dog spotlight by date.',
     },
-    async () => withErrorHandling(() => client.getPetOfTheDay()),
+    async () => withErrorHandling(() => client.getPawOfTheDay()),
   );
 }

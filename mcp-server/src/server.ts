@@ -4,7 +4,7 @@ import { loadConfig } from './config/env.js';
 import { registerResources } from './resources.js';
 import { registerCatTools } from './tools/cat-tools.js';
 import { registerDogTools } from './tools/dog-tools.js';
-import { registerPetsTools } from './tools/pets-tools.js';
+import { registerPawsTools } from './tools/paws-tools.js';
 
 export function createServer(): McpServer {
   const config = loadConfig();
@@ -14,7 +14,7 @@ export function createServer(): McpServer {
 
   registerCatTools(server, client);
   registerDogTools(server, client);
-  registerPetsTools(server, client);
+  registerPawsTools(server, client);
   registerResources(server, client);
 
   return server;

@@ -13,8 +13,8 @@ import { DogService } from './modules/dogs/dog.service';
 import type { DogBreed } from './modules/dogs/dog.types';
 import { createHealthRouter } from './modules/health/health.routes';
 import { HealthService } from './modules/health/health.service';
-import { createPetsRouter } from './modules/pets/pets.routes';
-import { PetsService } from './modules/pets/pets.service';
+import { createPawsRouter } from './modules/paws/paws.routes';
+import { PawsService } from './modules/paws/paws.service';
 import { createDocsRouter } from './docs/docs.routes';
 
 const ONE_HOUR_MS = 60 * 60 * 1000;
@@ -45,7 +45,7 @@ export function createApp(config: AppConfig = loadConfig()): Express {
 
   const catService = new CatService(catRepository);
   const dogService = new DogService(dogRepository);
-  const petsService = new PetsService(catService, dogService);
+  const pawsService = new PawsService(catService, dogService);
   const healthService = new HealthService();
 
   app.disable('x-powered-by');
@@ -61,7 +61,7 @@ export function createApp(config: AppConfig = loadConfig()): Express {
   app.use('/health', createHealthRouter(healthService));
   app.use('/cats', createCatRouter(catService));
   app.use('/dogs', createDogRouter(dogService));
-  app.use('/pets', createPetsRouter(petsService));
+  app.use('/paws', createPawsRouter(pawsService));
   app.use(createDocsRouter());
 
   app.use(notFoundHandler);
