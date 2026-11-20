@@ -1,3 +1,9 @@
+## v0.2.0 (2026-11-20)
+
+### Feat
+
+- **web**: replace Vite scaffold with a coming-soon page (#52)
+
 ## v0.1.0 (2026-11-20)
 
 ### Feat
