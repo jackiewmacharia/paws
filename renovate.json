@@ -1,0 +1,44 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits", ":dependencyDashboard"],
+  "schedule": ["before 6am on monday"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchFileNames": ["api/**"],
+      "semanticCommitScope": "api",
+      "additionalBranchPrefix": "api-"
+    },
+    {
+      "matchFileNames": ["mcp-server/**"],
+      "semanticCommitScope": "mcp-server",
+      "additionalBranchPrefix": "mcp-server-"
+    },
+    {
+      "matchFileNames": ["web/**"],
+      "semanticCommitScope": "web",
+      "additionalBranchPrefix": "web-"
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "groupName": "non-major dependencies",
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions",
+      "semanticCommitScope": "ci"
+    },
+    {
+      "description": "Bump pnpm in all three packages together instead of one branch per package",
+      "matchDepTypes": ["packageManager"],
+      "matchDepNames": ["pnpm"],
+      "groupName": "pnpm",
+      "semanticCommitScope": "deps",
+      "additionalBranchPrefix": ""
+    }
+  ]
+}
