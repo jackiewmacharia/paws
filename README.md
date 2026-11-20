@@ -39,4 +39,10 @@ flowchart LR
     api -- "HTTPS + API key" --> dog
 ```
 
+## Getting started
+
+**Prerequisites:** free API keys from [TheCatAPI](https://thecatapi.com) and
+[TheDogAPI](https://thedogapi.com). TheDogAPI rejects most requests without one. Add them to
+`api/.env` (copy `api/.env.template`).
+
 See each folder's README for setup.
