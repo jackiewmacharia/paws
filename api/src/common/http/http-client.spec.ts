@@ -93,9 +93,9 @@ describe('HttpClient', () => {
     it('aborts the request after timeoutMs and reports a 504', async () => {
       vi.useFakeTimers();
       fetchMock.mockImplementation(
-        (_url: string, init: RequestInit) =>
+        (_input: string | URL | Request, init?: RequestInit) =>
           new Promise((_resolve, reject) => {
-            init.signal!.addEventListener('abort', () => {
+            init!.signal!.addEventListener('abort', () => {
               const abortError = new Error('The operation was aborted');
               abortError.name = 'AbortError';
               reject(abortError);
