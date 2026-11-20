@@ -6,12 +6,7 @@ export interface BreedImageSearchParams {
   breedId?: string;
 }
 
-/**
- * Data-access layer shared by `CatRepository` and `DogRepository`. TheCatAPI
- * and TheDogAPI (same vendor) expose identical `/breeds`, `/breeds/search`,
- * `/breeds/{id}`, and `/images/search` shapes, so there's no per-species
- * behavior here — just the types differ, via `TBreed`/`TImage`.
- */
+/** TheCatAPI and TheDogAPI share a vendor and identical endpoints, so only the types differ. */
 export class BreedRepository<TBreed extends { id: string | number }, TImage> {
   constructor(
     private readonly http: HttpClient,
@@ -28,11 +23,7 @@ export class BreedRepository<TBreed extends { id: string | number }, TImage> {
     return this.http.get<TBreed[]>('/breeds/search', { q: query });
   }
 
-  /**
-   * Prefers the cached breed list over a network round trip when it's already
-   * warm. Ids arrive as path strings but TheDogAPI's are numbers, so compare
-   * as strings.
-   */
+  /** TheDogAPI's ids are numbers, so compare as strings. */
   async findBreedById(id: string): Promise<TBreed> {
     const cached = this.breedsCache
       .get('all')

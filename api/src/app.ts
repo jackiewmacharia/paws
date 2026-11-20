@@ -19,15 +19,9 @@ import { createDocsRouter } from './docs/docs.routes';
 
 const ONE_HOUR_MS = 60 * 60 * 1000;
 
-/**
- * Builds and configures the Express app: wires the repository -> service ->
- * routes layers for each resource by hand (no DI framework) and mounts
- * their routers. `main.ts` is the only thing that calls `.listen()`.
- */
 export function createApp(config: AppConfig = loadConfig()): Express {
   const app = express();
 
-  // --- Repositories: the only layer that talks to the outside world ---
   const catHttpClient = new HttpClient({
     name: 'TheCatAPI',
     baseUrl: config.catApi.baseUrl,
@@ -49,7 +43,6 @@ export function createApp(config: AppConfig = loadConfig()): Express {
     new TtlCache<DogBreed[]>(ONE_HOUR_MS),
   );
 
-  // --- Services: business logic, built on top of repositories ---
   const catService = new CatService(catRepository);
   const dogService = new DogService(dogRepository);
   const petsService = new PetsService(catService, dogService);

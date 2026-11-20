@@ -10,7 +10,6 @@ export interface DogSpotlight {
   funFact: string;
 }
 
-/** Business logic for dogs — mirrors CatService. */
 export class DogService {
   constructor(private readonly dogRepository: DogRepository) {}
 
@@ -42,10 +41,7 @@ export class DogService {
     return image;
   }
 
-  /**
-   * Same breed + fun fact all day, changing at UTC midnight. The photo is a
-   * fresh random pick per request, and is omitted if the image lookup fails.
-   */
+  /** The breed is fixed per UTC day, but the photo is re-picked on every request. */
   async getDogOfTheDay(): Promise<DogSpotlight> {
     const breeds = await this.dogRepository.findAllBreeds();
     const breed = dailyPick(breeds);

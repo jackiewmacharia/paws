@@ -13,7 +13,6 @@ export function notFoundHandler(req: Request, _res: Response, next: NextFunction
   next(new HttpError(404, `Cannot ${req.method} ${req.originalUrl}`));
 }
 
-/** Error-handling middleware (4-arg signature) — normalizes every thrown error into one JSON envelope. */
 export function errorHandler(
   exception: unknown,
   request: Request,

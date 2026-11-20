@@ -6,7 +6,6 @@ import { registerCatTools } from './tools/cat-tools.js';
 import { registerDogTools } from './tools/dog-tools.js';
 import { registerPetsTools } from './tools/pets-tools.js';
 
-/** Composition root: builds the client and wires every tool/resource module onto the MCP server. */
 export function createServer(): McpServer {
   const config = loadConfig();
   const client = new PawsApiClient({ baseUrl: config.pawsApiUrl, timeoutMs: config.requestTimeoutMs });

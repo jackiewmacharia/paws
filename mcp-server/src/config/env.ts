@@ -7,7 +7,6 @@ import { z } from 'zod';
 const DEFAULT_REQUEST_TIMEOUT_MS = 20_000;
 
 export interface McpConfig {
-  /** Base URL of the running paws-api instance this server fronts. */
   pawsApiUrl: string;
   requestTimeoutMs: number;
 }
@@ -24,7 +23,6 @@ const EnvSchema = z.object({
   PAWS_API_REQUEST_TIMEOUT_MS: optional(z.coerce.number().int().positive().default(DEFAULT_REQUEST_TIMEOUT_MS)),
 });
 
-/** Validates env at startup, naming the bad variable, instead of failing on every tool call. */
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): McpConfig {
   const parsed = EnvSchema.safeParse(env);
   if (!parsed.success) {

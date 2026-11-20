@@ -18,11 +18,6 @@ import type {
   SpeciesStats,
 } from './pets.types';
 
-/**
- * Orchestrates CatService + DogService into cross-species, "fun aggregate"
- * endpoints. Holds no data-access logic of its own — it's a pure
- * composition layer on top of the two per-species services.
- */
 export class PetsService {
   constructor(
     private readonly catService: CatService,
@@ -64,7 +59,6 @@ export class PetsService {
     };
   }
 
-  /** A lighthearted, three-round stat battle between a random cat breed and a random dog breed. */
   async getShowdown(): Promise<ShowdownResult> {
     const [catBreeds, dogBreeds] = await Promise.all([
       this.catService.getBreeds(),
@@ -106,7 +100,6 @@ export class PetsService {
     };
   }
 
-  /** Alternates species by date so the whole app doesn't always favor one. */
   async getPetOfTheDay(): Promise<PetOfTheDay> {
     const species: Species = dailyIndex(2) === 0 ? 'cat' : 'dog';
     if (species === 'cat') {

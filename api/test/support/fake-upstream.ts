@@ -43,13 +43,7 @@ export const dogBreeds: DogBreed[] = [
   },
 ];
 
-/**
- * Replaces global `fetch` with a fake implementation of just enough of
- * TheCatAPI / TheDogAPI to exercise the whole app without any real network
- * calls: `/breeds`, `/breeds/search`, `/breeds/{id}`, `/images/search`.
- * Mirrors each API's real quirk of unknown breed ids (cat: 400 plain-text,
- * dog: 404 JSON) so the service-layer normalization is exercised too.
- */
+/** Mirrors the real unknown-breed-id responses: cat 400 plain text, dog 404 JSON. */
 export function installFetchMock(): jest.SpyInstance {
   return jest
     .spyOn(global, 'fetch')

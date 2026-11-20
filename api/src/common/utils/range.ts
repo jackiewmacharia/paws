@@ -4,11 +4,7 @@ export interface NumericRange {
   avg: number;
 }
 
-/**
- * Both pet APIs describe life span / weight / height as loose strings like
- * `"12 - 15"`, `"12-15 years"`, or `"7  -  10"`. This pulls the numbers out
- * so aggregate endpoints can actually do arithmetic on them.
- */
+/** Parses loose upstream strings like `"12 - 15"` or `"12-15 years"`. */
 export function parseRange(
   text: string | null | undefined,
 ): NumericRange | undefined {

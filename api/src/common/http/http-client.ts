@@ -11,11 +11,6 @@ export interface HttpClientOptions {
 
 export type QueryParams = Record<string, string | number | boolean | undefined>;
 
-/**
- * Thin wrapper around the platform `fetch` for talking to a single upstream
- * REST API. Centralizes base URL, auth header, timeouts, and error mapping
- * so repositories only deal with typed data, never with `fetch` directly.
- */
 export class HttpClient {
   constructor(private readonly options: HttpClientOptions) {}
 

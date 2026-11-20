@@ -23,7 +23,7 @@ const dog = (overrides: Partial<DogBreed> = {}): DogBreed => ({
   ...overrides,
 });
 
-/** Builds a PetsService over hand-written fakes. Single-breed lists make the "random" pick deterministic. */
+/** Single-breed lists make the "random" pick deterministic. */
 function setup(catBreeds: CatBreed[], dogBreeds: DogBreed[]) {
   const catService = {
     getBreeds: jest.fn().mockResolvedValue(catBreeds),

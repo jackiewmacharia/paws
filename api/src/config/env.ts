@@ -28,12 +28,6 @@ const EnvSchema = z.object({
   DOG_API_KEY: optional(z.string().optional()),
 });
 
-/**
- * Reads and validates process env into a typed config object, failing fast
- * at startup (naming the bad variable) instead of on the first request.
- * TheCatAPI works key-less at a lower rate limit; TheDogAPI rejects most
- * key-less requests. Either way a missing key is a warning, not a failure.
- */
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   const parsed = EnvSchema.safeParse(env);
   if (!parsed.success) {

@@ -3,7 +3,6 @@ import { z } from 'zod';
 import type { PawsApiClient } from '../client/paws-api-client.js';
 import { withErrorHandling } from './tool-result.js';
 
-/** Registers the cross-species "fun aggregate" tools, backed by paws-api's `/pets/*` routes. */
 export function registerPetsTools(server: McpServer, client: PawsApiClient): void {
   server.registerTool(
     'get_random_pet_duo',

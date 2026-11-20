@@ -3,7 +3,6 @@ import { z } from 'zod';
 import type { PawsApiClient } from '../client/paws-api-client.js';
 import { withErrorHandling } from './tool-result.js';
 
-/** Registers dog-related tools, backed by paws-api's `/dogs/*` routes. */
 export function registerDogTools(server: McpServer, client: PawsApiClient): void {
   server.registerTool(
     'list_dog_breeds',

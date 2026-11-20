@@ -3,14 +3,6 @@ import { OPENAPI_DOCUMENT } from './openapi';
 
 const SWAGGER_UI_VERSION = '5.17.14';
 
-/**
- * Serves the API schema two ways:
- *  - `GET /openapi.json` — the OpenAPI document.
- *  - `GET /docs` — an interactive Swagger UI page that loads that document.
- *
- * Both are static: nothing from the request (Host header, protocol) is
- * echoed back, so they behave the same behind a TLS-terminating proxy.
- */
 export function createDocsRouter(): Router {
   const router = Router();
 

@@ -1,8 +1,4 @@
-/**
- * The OpenAPI document, built once at module load. `servers` is the relative
- * URL `/`, so Swagger UI's "Try it out" targets whichever origin served the
- * document — no need to reconstruct it from the request's Host header.
- */
+/** A relative `servers` URL makes "Try it out" target whichever origin served the doc. */
 export const OPENAPI_DOCUMENT = {
   servers: [{ url: '/' }],
   openapi: '3.0.3',

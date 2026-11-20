@@ -4,7 +4,7 @@ import { createServer } from './server.js';
 async function main() {
   const server = createServer();
   const transport = new StdioServerTransport();
-  // stdout carries the MCP protocol — nothing in this process may write to it (no console.log anywhere); log to stderr.
+  // stdout carries the MCP protocol, so log to stderr only.
   await server.connect(transport);
   console.error('paws-mcp running on stdio');
 }

@@ -10,11 +10,6 @@ export interface CatSpotlight {
   funFact: string;
 }
 
-/**
- * Business logic for cats: talks to the CatRepository, translates
- * upstream quirks into a consistent API surface, and adds behaviour that
- * TheCatAPI doesn't provide directly (fun facts, "cat of the day").
- */
 export class CatService {
   constructor(private readonly catRepository: CatRepository) {}
 
@@ -46,10 +41,7 @@ export class CatService {
     return image;
   }
 
-  /**
-   * Same breed + fun fact all day, changing at UTC midnight. The photo is a
-   * fresh random pick per request, and is omitted if the image lookup fails.
-   */
+  /** The breed is fixed per UTC day, but the photo is re-picked on every request. */
   async getCatOfTheDay(): Promise<CatSpotlight> {
     const breeds = await this.catRepository.findAllBreeds();
     const breed = dailyPick(breeds);

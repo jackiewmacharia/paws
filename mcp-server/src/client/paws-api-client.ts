@@ -3,7 +3,6 @@ export interface PawsApiClientOptions {
   timeoutMs: number;
 }
 
-/** Raised when paws-api returns a non-2xx response, returns non-JSON (502), is unreachable (502), or times out (504). */
 export class PawsApiError extends Error {
   constructor(
     public readonly status: number,
@@ -16,16 +15,9 @@ export class PawsApiError extends Error {
 
 export type QueryParams = Record<string, string | undefined>;
 
-/**
- * Thin HTTP client for paws-api. This is the only place in the MCP
- * server that knows paws-api's routes and URL shape — tool handlers
- * only ever talk to this class, the same repository-style boundary
- * paws-api itself uses for TheCatAPI / TheDogAPI.
- */
 export class PawsApiClient {
   constructor(private readonly options: PawsApiClientOptions) {}
 
-  // --- cats ---
   listCatBreeds(q?: string): Promise<unknown> {
     return this.get('/cats/breeds', { q });
   }
@@ -42,7 +34,6 @@ export class PawsApiClient {
     return this.get('/cats/of-the-day');
   }
 
-  // --- dogs ---
   listDogBreeds(q?: string): Promise<unknown> {
     return this.get('/dogs/breeds', { q });
   }
@@ -59,7 +50,6 @@ export class PawsApiClient {
     return this.get('/dogs/of-the-day');
   }
 
-  // --- cross-species aggregates ---
   getRandomDuo(): Promise<unknown> {
     return this.get('/pets/random-duo');
   }
@@ -76,7 +66,6 @@ export class PawsApiClient {
     return this.get('/pets/of-the-day');
   }
 
-  // --- schema ---
   getOpenApiSchema(): Promise<unknown> {
     return this.get('/openapi.json');
   }
@@ -93,7 +82,6 @@ export class PawsApiClient {
         signal: controller.signal,
       });
       if (!res.ok) {
-        // Error bodies are best-effort: a missing/garbled envelope just falls back to a generic message.
         const body: unknown = await res.json().catch(() => undefined);
         throw new PawsApiError(res.status, describeError(body, res.status, path));
       }
@@ -130,7 +118,7 @@ export class PawsApiClient {
   }
 }
 
-/** paws-api's own error envelope is `{ statusCode, timestamp, path, message }` — `message` is a string[] for validation errors. */
+/** `message` is a string[] for validation errors. */
 function describeError(body: unknown, status: number, path: string): string {
   if (body && typeof body === 'object' && 'message' in body) {
     const { message } = body as { message: unknown };

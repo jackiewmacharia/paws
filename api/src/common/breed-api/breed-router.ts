@@ -14,17 +14,6 @@ export interface BreedRouterService<TBreed, TImage, TSpotlight> {
   getRandomImage(breedId?: string): Promise<TImage>;
 }
 
-/**
- * Route wiring shared by `cat.routes.ts` and `dog.routes.ts` — both
- * expose the identical `/breeds`, `/breeds/:id`, `/breeds/:id/spotlight`,
- * `/random`, and `/of-the-day` shape. `getOfTheDay` is passed separately
- * since each service names it differently (`getCatOfTheDay` /
- * `getDogOfTheDay`).
- *
- * Express 5 forwards rejected promises from async handlers to the error
- * middleware automatically, so handlers stay plain `async` functions — no
- * `asyncHandler` wrapper needed.
- */
 export function createBreedRouter<TBreed, TImage, TSpotlight>(
   service: BreedRouterService<TBreed, TImage, TSpotlight>,
   getOfTheDay: () => Promise<TSpotlight>,

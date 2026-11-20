@@ -1,11 +1,4 @@
-/**
- * Small in-memory, time-to-live cache. Used by repositories to avoid
- * re-fetching upstream data (like breed lists) that barely changes,
- * which keeps us under the free-tier rate limits of TheCatAPI / TheDogAPI.
- *
- * Intentionally process-local and dependency-free — good enough for a
- * single instance of this service; swap for Redis if this ever runs multi-instance.
- */
+/** Process-local, so swap for Redis if this ever runs multi-instance. */
 export class TtlCache<T> {
   private readonly store = new Map<string, { value: T; expiresAt: number }>();
   private readonly pending = new Map<string, Promise<T>>();
@@ -26,11 +19,7 @@ export class TtlCache<T> {
     this.store.set(key, { value, expiresAt: Date.now() + this.ttlMs });
   }
 
-  /**
-   * Returns the cached value for `key`, populating it via `factory` on a
-   * miss. Concurrent misses for the same key share one in-flight `factory`
-   * call instead of each firing their own upstream request.
-   */
+  /** Concurrent misses for the same key share one in-flight `factory` call. */
   async getOrSet(key: string, factory: () => Promise<T>): Promise<T> {
     const cached = this.get(key);
     if (cached !== undefined) return cached;

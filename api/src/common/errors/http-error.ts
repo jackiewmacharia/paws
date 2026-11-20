@@ -1,7 +1,3 @@
-/**
- * Base error for anything that should be surfaced to the client as a
- * specific HTTP status code + message, instead of a generic 500.
- */
 export class HttpError extends Error {
   constructor(
     public readonly status: number,
@@ -20,13 +16,8 @@ export class NotFoundError extends HttpError {
 }
 
 /**
- * Raised by repositories when an upstream pet API (TheCatAPI / TheDogAPI)
- * fails, times out, or returns a non-2xx response. The client-facing
- * `status` is always a gateway error (502, or 504 for timeouts) — an
- * upstream 401/429 is our problem, not the caller's — while the upstream's
- * own code is kept in `upstreamStatus` so services can still translate
- * specific cases (e.g. an upstream 400 for an unknown breed id becomes a
- * client-facing 404).
+ * Always surfaces as 502/504: an upstream 401/429 is our problem, not the
+ * caller's. The upstream's own code is kept in `upstreamStatus`.
  */
 export class ExternalApiError extends HttpError {
   constructor(
@@ -40,12 +31,7 @@ export class ExternalApiError extends HttpError {
   }
 }
 
-/**
- * Runs an upstream call and turns an upstream 400 or 404 into a
- * client-facing `NotFoundError`. Both TheCatAPI and TheDogAPI use this
- * shape for "unknown breed id" — they just disagree on which status they
- * use for it — so callers shouldn't have to guess which one applies.
- */
+/** For an unknown breed id, TheCatAPI returns 400 and TheDogAPI returns 404. */
 export async function notFoundOnUpstreamMiss<T>(fn: () => Promise<T>, message: string): Promise<T> {
   try {
     return await fn();
@@ -57,12 +43,7 @@ export async function notFoundOnUpstreamMiss<T>(fn: () => Promise<T>, message: s
   }
 }
 
-/**
- * Resolves to `undefined` instead of rejecting, for best-effort extras (like
- * a breed photo) that shouldn't fail the whole response. A `NotFoundError` is
- * expected and stays quiet; anything else (bad API key, rate limit, outage)
- * is logged so it doesn't go unnoticed.
- */
+/** For optional extras like a breed photo. Failures other than `NotFoundError` are logged. */
 export async function bestEffort<T>(promise: Promise<T>, context: string): Promise<T | undefined> {
   try {
     return await promise;

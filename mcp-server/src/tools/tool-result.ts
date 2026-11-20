@@ -15,10 +15,6 @@ export function errorResult(err: unknown): CallToolResult {
   return { content: [{ type: 'text', text: message }], isError: true };
 }
 
-/**
- * Runs a tool handler and returns its result as pretty-printed JSON, or an
- * `isError` result that includes the paws-api HTTP status when one is available.
- */
 export function withErrorHandling(
   handler: () => Promise<unknown>,
 ): Promise<CallToolResult> {
