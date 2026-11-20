@@ -1,4 +1,4 @@
-# paws
+# 🐾 paws
 
 All paws, no bite: TheCatAPI and TheDogAPI in one friendly API, with an MCP server and web
 app. Built while learning how to build [MCPs](https://modelcontextprotocol.io).
