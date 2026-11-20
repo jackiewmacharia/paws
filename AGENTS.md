@@ -18,6 +18,10 @@ and installs and runs on its own, so run commands from inside the package's fold
 - Do each piece of work on its own branch off `main`, then open a PR into `main`.
 - Use Conventional Commits for commit messages and PR titles (`feat:`, `fix:`, `docs:`, `refactor:`,
   `test:`, `chore:`). Fix things with new commits; existing commits stay as they are.
+- Releases are automatic. On every push to `main`, `.github/workflows/release.yml` runs commitizen
+  (config in `.cz.toml`). It bumps the shared version in all three `package.json`s, updates
+  `CHANGELOG.md`, and tags `vX.Y.Z`. `feat:` bumps the minor version and `fix:` bumps the patch;
+  other types don't trigger a release. Don't edit versions or the changelog by hand.
 - While iterating on small tweaks, make the edits and commit only once the user says the tweaks are
   done.
 - PR bodies follow `.github/pull_request_template.md`: Why / Related Issue, What changed, Testing.

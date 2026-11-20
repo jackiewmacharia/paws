@@ -1,0 +1,13 @@
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.1"
+version_scheme = "semver2"
+tag_format = "v$version"
+bump_message = "chore(release): v$new_version"
+update_changelog_on_bump = true
+major_version_zero = true
+version_files = [
+  "api/package.json:\"version\"",
+  "mcp-server/package.json:\"version\"",
+  "web/package.json:\"version\"",
+]
