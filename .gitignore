@@ -1,0 +1,4 @@
+# Track shared Claude settings at any depth (the global gitignore ignores .claude)
+!.claude/
+**/.claude/*
+!**/.claude/settings.json
