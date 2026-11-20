@@ -3,7 +3,7 @@
 All paws, no bite: TheCatAPI and TheDogAPI in one friendly API, with an MCP server and web app.
 
 Built while learning how to build [MCP](https://modelcontextprotocol.io) servers. The API gives the
-MCP server something real to front.
+MCP server an extensible interface.
 
 | Folder | What it is |
 | --- | --- |
