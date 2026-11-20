@@ -1,6 +1,6 @@
 {
   "name": "paws-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Aggregates TheCatAPI and TheDogAPI into per-species endpoints plus cross-species aggregate endpoints.",
   "author": "",
   "private": true,
