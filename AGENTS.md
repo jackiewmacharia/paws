@@ -25,8 +25,9 @@ commands from inside the package's folder.
 
 ## Verifying a change
 
-There's no CI. Before committing, run these in every package you touched. A change is done when all
-of them pass:
+Before committing, run these in every package you touched. A change is done when all of them pass.
+CI (`.github/workflows/ci.yml`) runs the same commands on every PR, one job per package, so keep the
+two lists in sync:
 
 - `api/`: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build`
 - `mcp-server/`: `pnpm lint && pnpm typecheck && pnpm test && pnpm build`
