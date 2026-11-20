@@ -21,7 +21,8 @@ and installs and runs on its own, so run commands from inside the package's fold
 - While iterating on small tweaks, make the edits and commit only once the user says the tweaks are
   done.
 - PR bodies follow `.github/pull_request_template.md`: Why / Related Issue, What changed, Testing.
-  Under Testing, list the commands you ran.
+  Keep them concise. Under What changed, explain each change in a brief prose bullet and leave the
+  code to the PR's diff. Under Testing, list the commands you ran.
 
 ## Verifying a change
 
